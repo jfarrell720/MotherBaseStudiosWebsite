@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>W3.CSS Template</title>
+<title>Mother Base Studios - Elevating RPGs</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -12,10 +12,18 @@
 body,h1 {font-family: "Raleway", sans-serif}
 body, html {height: 100%}
 .bgimg {
-  background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg');
+  background-image: url('https://www.w3schools.com/w3images/dragon.jpg');
   min-height: 100%;
   background-position: center;
   background-size: cover;
+}
+.w3-animate-zoom {
+  animation: animatezoom 10s infinite;
+}
+@keyframes animatezoom {
+  0% {transform: scale(1)}
+  50% {transform: scale(1.2)}
+  100% {transform: scale(1)}
 }
 </style>
 </head>
@@ -25,17 +33,16 @@ body, html {height: 100%}
   <div class="w3-display-topleft w3-padding-large w3-xlarge">
     Mother Base Studios
   </div>
-  <div class="w3-display-middle">
-    <h1 class="w3-jumbo w3-animate-top">COMING SOON</h1>
+  <div class="w3-display-middle w3-animate-zoom">
+    <h1 class="w3-jumbo w3-animate-top">ELEVATING RPGS</h1>
     <hr class="w3-border-grey" style="margin:auto;width:40%">
-    <p class="w3-large w3-center">The next generation of online gaming</p>
+    <p class="w3-large w3-center">Join us in our quest to create the most immersive and innovative role-playing games ever. Explore vast worlds, customize your characters, and shape your own destiny.</p>
   </div>
   <div class="w3-display-bottomleft w3-padding-large">
-   <!--<i class="fa fa-facebook-official w3-hover-opacity"></i> --> 
-    <a class="fa fa-instagram w3-hover-opacity" href="https://www.instagram.com/motherbasestudios/"></a>
-    <a class="fa fa-youtube w3-hover-opacity" href="https://www.youtube.com/channel/UCtcPY2BnJyfmbSXYYKNOD7g"></a>
-    <!--<i class="fa fa-twitter w3-hover-opacity"></i> -->
-    <!--<i class="fa fa-linkedin w3-hover-opacity"></i> -->
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity" href="https://www.instagram.com/motherbasestudios/"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
   </div>
 </div>
 </body>
