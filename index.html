@@ -17,11 +17,33 @@ body, html {height: 100%}
   background-position: center;
   background-size: cover;
 }
+
+/* Positioning for the button */
+.top-right-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.top-right-button:hover {
+  background-color: #45a049;
+}
 </style>
 </head>
 <body>
 
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+  <!-- Top-right button to link to another page -->
+  <a href="anotherpage.html">
+    <button class="top-right-button">Assets for Sale</button>
+  </a>
+  
   <div class="w3-display-topleft w3-padding-large w3-xlarge">
     Mother Base Studios
   </div>
@@ -32,10 +54,11 @@ body, html {height: 100%}
   </div>
   <div class="w3-display-bottomleft w3-padding-large">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <i class="fa fa-instagram w3-hover-opacity" href="https://www.instagram.com/motherbasestudios/"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
     <i class="fa fa-twitter w3-hover-opacity"></i>
     <i class="fa fa-linkedin w3-hover-opacity"></i>
   </div>
 </div>
+<script src="assets.js"></script>
 </body>
 </html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Another Page</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <style>
+    /* Same background as the index page */
+    .bgimg {
+      background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg');
+      min-height: 100%;
+      background-position: center;
+      background-size: cover;
+    }
+    body, html {
+      font-family: "Raleway", sans-serif;
+      height: 100%;
+      margin: 0;
+      color: white; /* Set default text color to white */
+    }
+    .content {
+      text-align: center;
+      padding: 50px;
+    }
+    .content img {
+      width: 50%;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    .asset-details {
+      text-align: left;
+      margin-top: 20px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      color: white; /* Ensure text inside the asset details is white */
+    }
+    .asset-details h2 {
+      color: #4CAF50; /* Title color */
+    }
+    .asset-details p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .price {
+      font-weight: bold;
+      color: #E91E63;
+      font-size: 22px;
+    }
+    .email-button {
+      margin-top: 20px;
+      padding: 15px 25px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 5px;
+      text-decoration: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .email-button:hover {
+      background-color: #45a049;
+    }
+
+    /* Styling for the back button */
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .back-button:hover {
+      background-color: #45a049;
+    }
+
+    /* Section below the email button */
+    .fallback-message {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #FF5722; /* Color for the fallback message */
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bgimg">
+    <!-- Back button to go back to index.html -->
+    <a href="index.html">
+      <button class="back-button">Back to Home</button>
+    </a>
+
+    <div class="content">
+      <img src="asset.png" alt="Palisade Barricade">
+    </div>
+
+    <div class="asset-details">
+      <h2>Asset Details</h2>
+      <p><strong>Name:</strong> Palisade Barricade</p>
+      <p><strong>Asset Description:</strong><br>
+        The asset comes with one defensive structure in the Palisade Barricade. It is fully textured in a low poly style. It is optimized to operate well in any game. You will also find a low poly sand and low poly water tile in the set to help dress it up with something besides a generic terrain set. Use them to create a large map. The barricade object itself can be rotated in place to create more structures. It is also set up to be placed lower in the ground, and enables the user to alter the height if they desire.
+      </p>
+      <p><strong>Asset Contents:</strong><br>
+        - One Textured Low Poly Palisade Barricade<br>
+        - One Low Poly Sand Tile<br>
+        - One Low Poly Water Tile
+      </p>
+      <p class="price"><strong>Price:</strong> $1.00</p>
+
+      <!-- Email button inside the asset details box -->
+      <a href="mailto:jamesfarrell720@gmail.com?subject=Inquiry about Palisade Barricade Asset&body=Hello, I have a question about the Palisade Barricade asset.">
+        <button class="email-button">Email us to purchase this Asset</button>
+      </a>
+
+      <!-- Fallback message section -->
+      <div class="fallback-message">
+        <p>If the email button doesn't work, please email us directly at <a href="mailto:jamesfarrell720@gmail.com">jamesfarrell720@gmail.com</a>.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
