@@ -36,12 +36,12 @@ pipeline {
         //     }
         // }
 
-        stage('Package') {
-            steps {
-                echo 'Packaging website...'
-                bat 'zip -r website.zip *.html *.css *.js'
-            }
-        }
+        // stage('Package') {
+        //     steps {
+        //         echo 'Packaging website...'
+        //         bat 'zip -r website.zip *.html *.css *.js'
+        //     }
+        // }
 
         stage('Deploy to GitHub Pages') {
             steps {
