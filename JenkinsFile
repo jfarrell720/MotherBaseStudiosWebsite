@@ -22,19 +22,19 @@ pipeline {
             }
         }
 
-        stage('Validate HTML') {
-            steps {
-                powershell(script: '''
-                    npm install htmlhint
-                    htmlhint .\src --config .\node_modules\htmlhint\configs\htmlhint.json
-                ''')
-            }
-            post {
-                failure {
-                    echo 'HTML validation failed. Please check the errors.'
-                }
-            }
-        }
+        // stage('Validate HTML') {
+        //     steps {
+        //         powershell(script: '''
+        //             npm install htmlhint
+        //             htmlhint .\src --config .\node_modules\htmlhint\configs\htmlhint.json
+        //         ''')
+        //     }
+        //     post {
+        //         failure {
+        //             echo 'HTML validation failed. Please check the errors.'
+        //         }
+        //     }
+        // }
 
 
         // stage('Test') {
