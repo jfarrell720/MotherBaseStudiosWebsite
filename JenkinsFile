@@ -55,7 +55,7 @@ pipeline {
         steps {
             echo 'Deploying to GitHub Pages...'
             withCredentials([string(credentialsId: 'GitHubToken', variable: 'GITHUB_TOKEN')]) {
-                sh '''
+                bat '''
                     git config --global user.name "jfarrell720"
                     git config --global user.email "jamesfarrell720@gmail.com"
                     git checkout -B gh-pages
@@ -66,6 +66,7 @@ pipeline {
             }
         }
     }
+
 
     }
 
