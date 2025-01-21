@@ -51,21 +51,21 @@ pipeline {
         //     }
         // }
 
-        stage('Deploy to GitHub Pages') {
-            steps {
-                echo 'Deploying to GitHub Pages...'
-                withCredentials([usernamePassword(credentialsId: 'GitHubToken', usernameVariable: 'USERNAME', passwordVariable: 'GITHUB_TOKEN')]) {
-                    bat '''
-                        git config --global user.name "jfarrell720"
-                        git config --global user.email "jamesfarrell720@gmail.com"
-                        git checkout -B gh-pages
-                        git add .
-                        git commit -m "Deploying to GitHub Pages"
-                        git push https://${USERNAME}:${GITHUB_TOKEN}@github.com/jfarrell720/MotherBaseStudiosWebsite.git gh-pages
-                    '''
-                }
+    stage('Deploy to GitHub Pages') {
+        steps {
+            echo 'Deploying to GitHub Pages...'
+            withCredentials([string(credentialsId: 'GitHubToken', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config --global user.name "jfarrell720"
+                    git config --global user.email "jamesfarrell720@gmail.com"
+                    git checkout -B gh-pages
+                    git add .
+                    git commit -m "Deploying to GitHub Pages"
+                    git push https://${GITHUB_TOKEN}@github.com/jfarrell720/MotherBaseStudiosWebsite.git gh-pages --force
+                '''
             }
         }
+    }
 
     }
 
