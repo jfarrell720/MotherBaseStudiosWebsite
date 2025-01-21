@@ -54,7 +54,7 @@ pipeline {
     stage('Deploy to GitHub Pages') {
         steps {
             echo 'Deploying to GitHub Pages...'
-            withCredentials([string(credentialsId: 'YourNewCredentialID', variable: 'GITHUB_TOKEN')]) {
+            withCredentials([string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     git config --global user.name "jfarrell720"
                     git config --global user.email "jamesfarrell720@gmail.com"
