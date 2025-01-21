@@ -15,6 +15,7 @@ pipeline {
                     url: "${REPO_URL}"
             }
         }
+        
 
         stage('Build') {
             steps {
@@ -55,6 +56,7 @@ pipeline {
         steps {
             echo 'Starting deployment to GitHub Pages...'
             withCredentials([string(credentialsId: 'GitHubToken', variable: 'GITHUB_TOKEN')]) {
+                echo "Token retrieved: ${GITHUB_TOKEN.take(4)}****"
                 bat '''
                     git config --global user.name "jfarrell720"
                     git config --global user.email "jamesfarrell720@gmail.com"
