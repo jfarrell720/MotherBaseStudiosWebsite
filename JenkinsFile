@@ -69,14 +69,12 @@ pipeline {
                     git commit -m "Deploying to GitHub Pages"
                     echo "Commit made..."
 
-                    git push https://${GITHUB_TOKEN}@github.com/jfarrell720/MotherBaseStudiosWebsite.git gh-pages --force
+                    git push https://${GITHUB_TOKEN}@github.com/jfarrell720/MotherBaseStudiosWebsite.git gh-pages --force --verbose
                     echo "Push complete."
                 '''
             }
         }
     }
-
-
 
     }
 
