@@ -1,54 +1,46 @@
 pipeline {
     agent any
 
-    environment {
-        REPO_URL = 'git@github.com:jfarrell720/MotherBaseStudiosWebsite.git' // Use SSH URL
-        BRANCH = 'develop'
-    }
-
     stages {
-        stage('Clone Repository') {
+        stage('Setup Known Hosts') {
             steps {
-                git branch: "${BRANCH}",
-                    credentialsId: 'GitHubSSHKey', // Use the SSH key stored in Jenkins credentials
-                    url: "${REPO_URL}"
+                script {
+                    // Automatically add GitHub host key to known hosts
+                    def knownHostsFile = new File(System.env.HOME + '/.ssh/known_hosts')
+                    def githubFingerprint = 'SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU'
+                    def key = "github.com ssh-ed25519 " + githubFingerprint.split(':')[1]
+
+                    if (!knownHostsFile.text.contains(key)) {
+                        knownHostsFile.append(key + "\n")
+                    }
+                }
             }
         }
 
-        stage('Build') {
+        stage('Clone Repository') {
             steps {
-                echo 'No build step required for HTML. Proceeding to validation.'
+                git branch: 'main', credentialsId: 'GitHubSSHKey', url: 'git@github.com:jfarrell720/MotherBaseStudiosWebsite.git'
             }
         }
 
         stage('Deploy to GitHub Pages') {
             steps {
-                echo 'Starting deployment to GitHub Pages...'
-                withCredentials([sshUserPrivateKey(credentialsId: 'GitHubSSHKey', keyFileVariable: 'SSH_KEY_PATH')]) {
-                    sh '''
-                        eval `ssh-agent -s`
-                        ssh-add $SSH_KEY_PATH
-                        
+                echo 'Deploying to GitHub Pages...'
+                withCredentials([string(credentialsId: 'GitHubToken', variable: 'GITHUB_TOKEN')]) {
+                    bat '''
                         git config --global user.name "jfarrell720"
                         git config --global user.email "jamesfarrell720@gmail.com"
-                        echo "Configured Git user..."
-                        
                         git checkout -B gh-pages
-                        echo "Checked out to gh-pages branch..."
-                        
                         git add .
-                        echo "Files added to staging..."
-                        
                         git commit -m "Deploying to GitHub Pages"
-                        echo "Commit made..."
-                        
-                        git push origin gh-pages --force --verbose
-                        echo "Push complete."
+                        git push https://${GITHUB_TOKEN}@github.com/jfarrell720/MotherBaseStudiosWebsite.git gh-pages --force
                     '''
                 }
             }
         }
     }
+
+
 
     post {
         success {
