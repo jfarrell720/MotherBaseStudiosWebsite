@@ -1,46 +1,84 @@
 pipeline {
     agent any
 
+    environment {
+        REPO_URL = 'https://github.com/jfarrell720/MotherBaseStudiosWebsite.git'
+        BRANCH = 'develop'
+        GITHUB_TOKEN = credentials('GitHubToken')  // Securely stored GitHub Personal Access Token
+    }
+
     stages {
-        stage('Setup Known Hosts') {
-            steps {
-                script {
-                    // Automatically add GitHub host key to known hosts
-                    def knownHostsFile = new File(System.env.HOME + '/.ssh/known_hosts')
-                    def githubFingerprint = 'SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU'
-                    def key = "github.com ssh-ed25519 " + githubFingerprint.split(':')[1]
-
-                    if (!knownHostsFile.text.contains(key)) {
-                        knownHostsFile.append(key + "\n")
-                    }
-                }
-            }
-        }
-
         stage('Clone Repository') {
             steps {
-                git branch: 'main', credentialsId: 'GitHubSSHKey', url: 'git@github.com:jfarrell720/MotherBaseStudiosWebsite.git'
+                git branch: "${BRANCH}",
+                    credentialsId: 'GitHubToken',  // Use the stored credentials
+                    url: "${REPO_URL}"
+            }
+        }
+        
+
+        stage('Build') {
+            steps {
+                echo 'No build step required for HTML. Proceeding to validation.'
             }
         }
 
-        stage('Deploy to GitHub Pages') {
-            steps {
-                echo 'Deploying to GitHub Pages...'
-                withCredentials([string(credentialsId: 'GitHubToken', variable: 'GITHUB_TOKEN')]) {
-                    bat '''
-                        git config --global user.name "jfarrell720"
-                        git config --global user.email "jamesfarrell720@gmail.com"
-                        git checkout -B gh-pages
-                        git add .
-                        git commit -m "Deploying to GitHub Pages"
-                        git push https://${GITHUB_TOKEN}@github.com/jfarrell720/MotherBaseStudiosWebsite.git gh-pages --force
-                    '''
-                }
+        // stage('Validate HTML') {
+        //     steps {
+        //         powershell(script: '''
+        //             npm install htmlhint
+        //             htmlhint .\src --config .\node_modules\htmlhint\configs\htmlhint.json
+        //         ''')
+        //     }
+        //     post {
+        //         failure {
+        //             echo 'HTML validation failed. Please check the errors.'
+        //         }
+        //     }
+        // }
+
+
+        // stage('Test') {
+        //     steps {
+        //         echo 'Running automated tests...'
+        //         sh 'npx cypress run'
+        //     }
+        // }
+
+        // stage('Package') {
+        //     steps {
+        //         echo 'Packaging website...'
+        //         bat 'zip -r website.zip *.html *.css *.js'
+        //     }
+        // }
+
+    stage('Deploy to GitHub Pages') {
+        steps {
+            echo 'Starting deployment to GitHub Pages...'
+            withCredentials([string(credentialsId: 'GitHubToken', variable: 'GITHUB_TOKEN')]) {
+                echo "Token retrieved: ${GITHUB_TOKEN.take(4)}****"
+                bat '''
+                    git config --global user.name "jfarrell720"
+                    git config --global user.email "jamesfarrell720@gmail.com"
+                    echo "Configured Git user..."
+                    
+                    git checkout -B gh-pages
+                    echo "Checked out to gh-pages branch..."
+
+                    git add .
+                    echo "Files added to staging..."
+
+                    git commit -m "Deploying to GitHub Pages"
+                    echo "Commit made..."
+
+                    git push https://${GITHUB_TOKEN}@github.com/jfarrell720/MotherBaseStudiosWebsite.git gh-pages --force --verbose
+                    echo "Push complete."
+                '''
             }
         }
     }
 
-
+    }
 
     post {
         success {
