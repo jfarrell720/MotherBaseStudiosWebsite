@@ -2,20 +2,18 @@ pipeline {
     agent any
 
     environment {
-        REPO_URL = 'https://github.com/jfarrell720/MotherBaseStudiosWebsite.git'
+        REPO_URL = 'git@github.com:jfarrell720/MotherBaseStudiosWebsite.git' // Use SSH URL
         BRANCH = 'develop'
-        GITHUB_TOKEN = credentials('GitHubToken')  // Securely stored GitHub Personal Access Token
     }
 
     stages {
         stage('Clone Repository') {
             steps {
                 git branch: "${BRANCH}",
-                    credentialsId: 'GitHubToken',  // Use the stored credentials
+                    credentialsId: 'GitHubSSHKey', // Use the SSH key stored in Jenkins credentials
                     url: "${REPO_URL}"
             }
         }
-        
 
         stage('Build') {
             steps {
@@ -23,61 +21,33 @@ pipeline {
             }
         }
 
-        // stage('Validate HTML') {
-        //     steps {
-        //         powershell(script: '''
-        //             npm install htmlhint
-        //             htmlhint .\src --config .\node_modules\htmlhint\configs\htmlhint.json
-        //         ''')
-        //     }
-        //     post {
-        //         failure {
-        //             echo 'HTML validation failed. Please check the errors.'
-        //         }
-        //     }
-        // }
-
-
-        // stage('Test') {
-        //     steps {
-        //         echo 'Running automated tests...'
-        //         sh 'npx cypress run'
-        //     }
-        // }
-
-        // stage('Package') {
-        //     steps {
-        //         echo 'Packaging website...'
-        //         bat 'zip -r website.zip *.html *.css *.js'
-        //     }
-        // }
-
-    stage('Deploy to GitHub Pages') {
-        steps {
-            echo 'Starting deployment to GitHub Pages...'
-            withCredentials([string(credentialsId: 'GitHubToken', variable: 'GITHUB_TOKEN')]) {
-                echo "Token retrieved: ${GITHUB_TOKEN.take(4)}****"
-                bat '''
-                    git config --global user.name "jfarrell720"
-                    git config --global user.email "jamesfarrell720@gmail.com"
-                    echo "Configured Git user..."
-                    
-                    git checkout -B gh-pages
-                    echo "Checked out to gh-pages branch..."
-
-                    git add .
-                    echo "Files added to staging..."
-
-                    git commit -m "Deploying to GitHub Pages"
-                    echo "Commit made..."
-
-                    git push https://${GITHUB_TOKEN}@github.com/jfarrell720/MotherBaseStudiosWebsite.git gh-pages --force --verbose
-                    echo "Push complete."
-                '''
+        stage('Deploy to GitHub Pages') {
+            steps {
+                echo 'Starting deployment to GitHub Pages...'
+                withCredentials([sshUserPrivateKey(credentialsId: 'GitHubSSHKey', keyFileVariable: 'SSH_KEY_PATH')]) {
+                    sh '''
+                        eval `ssh-agent -s`
+                        ssh-add $SSH_KEY_PATH
+                        
+                        git config --global user.name "jfarrell720"
+                        git config --global user.email "jamesfarrell720@gmail.com"
+                        echo "Configured Git user..."
+                        
+                        git checkout -B gh-pages
+                        echo "Checked out to gh-pages branch..."
+                        
+                        git add .
+                        echo "Files added to staging..."
+                        
+                        git commit -m "Deploying to GitHub Pages"
+                        echo "Commit made..."
+                        
+                        git push origin gh-pages --force --verbose
+                        echo "Push complete."
+                    '''
+                }
             }
         }
-    }
-
     }
 
     post {
