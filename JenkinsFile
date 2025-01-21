@@ -53,19 +53,29 @@ pipeline {
 
     stage('Deploy to GitHub Pages') {
         steps {
-            echo 'Deploying to GitHub Pages...'
+            echo 'Starting deployment to GitHub Pages...'
             withCredentials([string(credentialsId: 'GitHubToken', variable: 'GITHUB_TOKEN')]) {
                 bat '''
                     git config --global user.name "jfarrell720"
                     git config --global user.email "jamesfarrell720@gmail.com"
+                    echo "Configured Git user..."
+                    
                     git checkout -B gh-pages
+                    echo "Checked out to gh-pages branch..."
+
                     git add .
+                    echo "Files added to staging..."
+
                     git commit -m "Deploying to GitHub Pages"
+                    echo "Commit made..."
+
                     git push https://${GITHUB_TOKEN}@github.com/jfarrell720/MotherBaseStudiosWebsite.git gh-pages --force
+                    echo "Push complete."
                 '''
             }
         }
     }
+
 
 
     }
